@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require './lib/player'
+require './lib/game'
 
 class Battle < Sinatra::Base
 
@@ -10,22 +11,27 @@ class Battle < Sinatra::Base
   end
 
   post '/names' do
-    $player1 = Player.new(params[:player1])
-    $player2 = Player.new(params[:player2])
+    player1 = Player.new(params[:player1])
+    player2 = Player.new(params[:player2])
+    $game = Game.new(player1, player2)
     redirect "/play"
   end
 
   get '/play' do
-    @player1 = $player1
-    @player2 = $player2
+    @game = $game
     erb(:play)
   end
 
   get '/action' do
-    @player1 = $player1
-    @player2 = $player2
-    @player1.attack(@player2)
+    @game = $game
+    @game.attack(@game.opponent_of(@game.current_turn))
+    @game.switch_turns
     erb(:action)
+  end
+
+  post '/switch-turns' do
+    $game.switch_turns
+    redirect('/play')
   end
 
   #starts the server if ruby file executed directly
