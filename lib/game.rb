@@ -31,7 +31,9 @@ class Game
     players.select { |player| player.hit_points <= 0 }.any?
   end
 
-
+  def loser
+    players.select { |player| player.hit_points <= 0 }.first
+  end
 
   private
 

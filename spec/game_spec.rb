@@ -59,6 +59,11 @@ describe '#hp_check' do
   end
 end
 
+describe '#loser' do
+  it 'returns the loser' do
+    expect(finished_game.loser).to eq dead_player
+  end
+end
 
 end
 
