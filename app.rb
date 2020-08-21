@@ -6,7 +6,11 @@ class Battle < Sinatra::Base
 
   enable :sessions
 
-  get '/' do
+before do 
+  @game = Game.instance
+end
+ 
+get '/' do
     erb(:index)
   end
 
@@ -18,12 +22,12 @@ class Battle < Sinatra::Base
   end
 
   get '/play' do
-    @game = Game.instance
+  
     erb(:play)
   end
 
   get '/action' do
-    @game = Game.instance
+  
     @game.attack(@game.opponent_of(@game.current_turn))
     @game.switch_turns
     if @game.hp_check?
@@ -33,13 +37,13 @@ class Battle < Sinatra::Base
   end
 
   post '/switch-turns' do
-    @game = Game.instance
+  
     @game.switch_turns
     redirect '/play'
   end
 
   get '/game_over' do
-    @game = Game.instance
+ 
     erb(:game_over)
   end
 
