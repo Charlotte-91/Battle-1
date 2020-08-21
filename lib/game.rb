@@ -27,6 +27,12 @@ class Game
     @players.select {|player| player != the_player }.first
   end
 
+  def hp_check?
+    players.select { |player| player.hit_points <= 0 }.any?
+  end
+
+
+
   private
 
   attr_reader :players
