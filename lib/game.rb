@@ -35,6 +35,15 @@ class Game
     players.select { |player| player.hit_points <= 0 }.first
   end
 
+  
+    def self.create(player1, player2)
+      @game = Game.new(player1, player2)
+    end
+
+    def self.instance
+      @game
+    end
+
   private
 
   attr_reader :players
